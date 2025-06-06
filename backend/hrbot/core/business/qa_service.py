@@ -1,9 +1,12 @@
 from typing import Dict, List, Tuple
-from .document_processor import DocumentProcessor
+from .document_processor import document_processor_instance
+import openai
+import os
 
 class QAService:
     def __init__(self):
-        self.document_processor = DocumentProcessor()
+        self.document_processor = document_processor_instance
+        openai.api_key = os.getenv("OPENAI_API_KEY")
 
     def answer_question(self, question: str) -> Tuple[str, List[Dict], float]:
         """

@@ -46,7 +46,7 @@ const Home = () => {
         align="center"
         sx={{ mb: 6 }}
       >
-        Welcome to HR Bot
+        Welcome to BxA Knowledge Base
       </Typography>
 
       <Typography

@@ -7,7 +7,7 @@ const Navbar = () => {
     <AppBar position="static">
       <Toolbar>
         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
-          HR Bot
+          BxA Knowledge Base
         </Typography>
         <Box>
           <Button

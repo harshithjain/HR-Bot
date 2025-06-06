@@ -54,7 +54,7 @@ const Chat = () => {
             variant="h5"
             sx={{ mb: 2, fontWeight: 700, textAlign: "center", color: '#35297f' }}
           >
-            HR Bot
+            BxA Knowledge Base
           </Typography>
           <List
             sx={{ flex: 1, minHeight: 200, maxHeight: 'calc(80vh - 180px)', overflowY: "auto", mb: 2, px: 1 }}

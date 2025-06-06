@@ -5,6 +5,7 @@ import Chat from './pages/Chat';
 import Users from './pages/Users';
 import Conversations from './pages/Conversations';
 import Settings from './pages/Settings';
+import Documents from './pages/Documents';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
         <Route path="/users" element={<Users />} />
         <Route path="/conversations" element={<Conversations />} />
         <Route path="/settings" element={<Settings />} />
+        <Route path="/documents" element={<Documents />} />
         <Route path="/" element={<Chat />} />
       </Routes>
     </Router>

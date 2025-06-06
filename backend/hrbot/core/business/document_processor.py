@@ -18,10 +18,14 @@ class DocumentProcessor:
         )
         self.vectorstore = None
         # Try to load existing FAISS index
-        if os.path.exists(self.index_path):
+        if os.path.exists("faiss_index"):
             try:
-                self.vectorstore = FAISS.load_local(self.index_path, self.embeddings)
-                print(f"[DocumentProcessor] Loaded FAISS index from {self.index_path}")
+                self.vectorstore = FAISS.load_local(
+                    "faiss_index", 
+                    self.embeddings,
+                    allow_dangerous_deserialization=True  # Allow pickle deserialization
+                )
+                print(f"[DocumentProcessor] Loaded FAISS index from faiss_index")
             except Exception as e:
                 print(f"[DocumentProcessor] Failed to load FAISS index: {e}")
                 self.vectorstore = None
@@ -46,8 +50,8 @@ class DocumentProcessor:
         else:
             self.vectorstore.add_documents(docs)
             print("[DocumentProcessor] Added documents to existing FAISS index.")
-        self.vectorstore.save_local(self.index_path)
-        print(f"[DocumentProcessor] Saved FAISS index to {self.index_path}")
+        self.vectorstore.save_local("faiss_index")
+        print(f"[DocumentProcessor] Saved FAISS index to faiss_index")
         return f"Processed {len(docs)} chunks from document"
 
     def search_similar_documents(self, query: str, limit: int = 5) -> List[Dict]:

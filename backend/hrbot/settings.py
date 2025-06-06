@@ -2,15 +2,19 @@ import os
 from pathlib import Path
 from dotenv import load_dotenv
 
+# Load environment variables from .env file
 load_dotenv()
 
-BASE_DIR = Path(__file__).resolve().parent.parent
+# Build paths inside the project like this: BASE_DIR / 'subdir'.
+BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
-SECRET_KEY = os.getenv('DJANGO_SECRET_KEY', 'your-secret-key-here')
+# SECURITY WARNING: keep the secret key used in production secret!
+SECRET_KEY = os.getenv('SECRET_KEY', 'your-default-secret-key-here')
 
-DEBUG = os.getenv('DEBUG', 'True') == 'True'
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = os.getenv('DEBUG', 'True').lower() == 'true'
 
-ALLOWED_HOSTS = ['*']
+ALLOWED_HOSTS = os.getenv('ALLOWED_HOSTS', '*').split(',')
 
 INSTALLED_APPS = [
     'django.contrib.admin',
@@ -114,4 +118,7 @@ QDRANT_COLLECTION_NAME = 'hr_documents'
 # SharePoint settings
 SHAREPOINT_CLIENT_ID = os.getenv('SHAREPOINT_CLIENT_ID')
 SHAREPOINT_CLIENT_SECRET = os.getenv('SHAREPOINT_CLIENT_SECRET')
-SHAREPOINT_SITE_URL = os.getenv('SHAREPOINT_SITE_URL') 
+SHAREPOINT_SITE_URL = os.getenv('SHAREPOINT_SITE_URL')
+
+# OpenAI API key
+OPENAI_API_KEY = os.getenv('OPENAI_API_KEY') 

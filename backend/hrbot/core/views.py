@@ -11,7 +11,7 @@ from .serializers import (
 )
 from .business.qa_service import QAService
 from rest_framework.parsers import JSONParser, MultiPartParser, FormParser
-from .business.document_processor import DocumentProcessor
+from .business.document_processor import document_processor_instance
 import os
 import tempfile
 from django.core.files.storage import default_storage
@@ -55,8 +55,7 @@ class DocumentViewSet(viewsets.ModelViewSet):
         # Save to Postgres
         doc = Document.objects.create(title=title, content=content, source_url=source_url)
         # Process for vector DB
-        processor = DocumentProcessor()
-        processor.process_document(content, {"id": doc.id, "title": title, "url": source_url})
+        document_processor_instance.process_document(content, {"id": doc.id, "title": title, "url": source_url})
         return Response({"message": "PDF uploaded and processed successfully."}, status=status.HTTP_201_CREATED)
 
 class QuestionViewSet(viewsets.ModelViewSet):

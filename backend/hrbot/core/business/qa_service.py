@@ -28,24 +28,37 @@ class QAService:
         # Calculate confidence score based on the best match
         confidence_score = relevant_docs[0]['score']
         
-        # Generate answer from the most relevant document
-        answer = self._generate_answer(question, relevant_docs[0]['text'])
+        # Concatenate all retrieved chunks as context
+        context = "\n\n".join([doc['text'] for doc in relevant_docs])
+        
+        # Generate answer using OpenAI LLM with strict context prompt
+        answer = self._generate_answer_llm(question, context)
         
         return answer, relevant_docs, confidence_score
 
-    def _generate_answer(self, question: str, context: str) -> str:
+    def _generate_answer_llm(self, question: str, context: str) -> str:
         """
-        Generate an answer based on the question and context
-        This is a simple implementation that returns the most relevant context
-        In a production environment, you might want to use a more sophisticated
-        approach with a language model
+        Generate an answer using OpenAI LLM with the provided context and question.
+        The LLM is instructed to answer ONLY using the context. If the answer is not present, it should say 'I don't know.'
         """
-        # For now, we'll return the most relevant context
-        # In a production environment, you might want to:
-        # 1. Use a language model to generate a more natural answer
-        # 2. Combine information from multiple relevant documents
-        # 3. Add citations and references
-        return context
+        prompt = (
+            "Use ONLY the following context to answer the question. "
+            "If the answer is not present, say 'I don't know.'\n\n"
+            f"Context:\n{context}\n\nQuestion: {question}\nAnswer:"
+        )
+        try:
+            # openai>=1.0.0 API
+            client = openai.OpenAI(api_key=os.getenv("OPENAI_API_KEY"))
+            response = client.chat.completions.create(
+                model="gpt-3.5-turbo",
+                messages=[{"role": "user", "content": prompt}],
+                max_tokens=256,
+                temperature=0.2,
+            )
+            return response.choices[0].message.content.strip()
+        except Exception as e:
+            print(f"[QAService] OpenAI API error: {e}")
+            return "Sorry, I couldn't generate an answer due to an internal error."
 
     def get_answer_with_sources(self, question: str) -> Dict:
         """

@@ -1,0 +1,16 @@
+.MuiToolbar-root > .MuiTypography-h5 {
+  font-size: 1.4rem;
+}
+.MuiToolbar-root {
+  min-height: 54px !important;
+}
+
+@media (max-width: 599px) {
+  .MuiBox-root > .MuiPaper-root {
+    max-width: calc(100vw - 34px);
+  }
+}
+
+.MuiToolbar-root > .MuiTypography-root {
+  padding-left: 40px;
+}

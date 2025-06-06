@@ -1,0 +1,5 @@
+@media screen and (max-width: 599px) {
+  .MuiPaper-root {
+    max-width: calc(100vw - 34px);
+  }
+}

@@ -9,6 +9,7 @@ class QAService:
         openai.api_key = os.getenv("OPENAI_API_KEY")
 
     def answer_question(self, question: str) -> Tuple[str, List[Dict], float]:
+        print(f"from core layer");
         """
         Answer a question based on the available documents
         

@@ -1,15 +1,21 @@
 import os
 from typing import List, Dict
 from langchain.text_splitter import RecursiveCharacterTextSplitter
-from langchain.vectorstores import FAISS
-from langchain.embeddings import OpenAIEmbeddings
+from langchain_community.vectorstores import FAISS
+from langchain_openai import OpenAIEmbeddings
 import openai
+from django.conf import settings
 
 class DocumentProcessor:
     def __init__(self):
+        if not os.getenv("OPENAI_API_KEY"):
+            raise ValueError("OPENAI_API_KEY environment variable is not set")
         openai.api_key = os.getenv("OPENAI_API_KEY")
         self.index_path = "faiss_index"
-        self.embeddings = OpenAIEmbeddings(model="text-embedding-ada-002")
+        self.embeddings = OpenAIEmbeddings(
+            model="text-embedding-ada-002",
+            openai_api_key=os.getenv("OPENAI_API_KEY")
+        )
         self.vectorstore = None
         # Try to load existing FAISS index
         if os.path.exists(self.index_path):

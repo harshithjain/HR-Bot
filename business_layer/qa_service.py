@@ -6,6 +6,7 @@ class QAService:
         self.document_processor = DocumentProcessor()
 
     def answer_question(self, question: str) -> Tuple[str, List[Dict], float]:
+        print(f"from business layer");
         """
         Answer a question based on the available documents
         

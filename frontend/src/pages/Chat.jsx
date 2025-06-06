@@ -48,16 +48,16 @@ const Chat = () => {
         justifyContent: "center",
       }}
     >
-      <Container maxWidth="sm" style={{ margin: "50px auto" }}>
-        <Paper elevation={6} sx={{ p: 3, borderRadius: 4 }}>
+      <Container maxWidth={false} style={{ margin: "50px auto", width: "60%", maxWidth: "60%", minWidth: 400, minHeight: '80vh', height: '80vh', display: 'flex', flexDirection: 'column', justifyContent: 'center' }}>
+        <Paper elevation={6} sx={{ p: 3, borderRadius: 4, background: 'rgba(255,255,255,0.95)', height: '100%', display: 'flex', flexDirection: 'column' }}>
           <Typography
             variant="h5"
-            sx={{ mb: 2, fontWeight: 700, textAlign: "center" }}
+            sx={{ mb: 2, fontWeight: 700, textAlign: "center", color: '#35297f' }}
           >
             HR Bot
           </Typography>
           <List
-            sx={{ minHeight: 200, maxHeight: 300, overflowY: "auto", mb: 2 }}
+            sx={{ flex: 1, minHeight: 200, maxHeight: 'calc(80vh - 180px)', overflowY: "auto", mb: 2, px: 1 }}
           >
             {messages.map((msg, idx) => (
               <ListItem
@@ -65,20 +65,32 @@ const Chat = () => {
                 sx={{
                   justifyContent:
                     msg.sender === "user" ? "flex-end" : "flex-start",
+                  display: 'flex',
                 }}
               >
-                <ListItemText
-                  primary={msg.text}
-                  sx={{
-                    bgcolor: msg.sender === "user" ? "#7b2ff2" : "#f357a8",
+                <span
+                  style={{
+                    whiteSpace: "pre-line",
+                    wordBreak: "break-word",
+                    fontSize: "1.08rem",
+                    lineHeight: 1.7,
+                    padding: "12px 20px",
+                    borderRadius: msg.sender === "user" ? "18px 18px 4px 18px" : "18px 18px 18px 4px",
+                    background:
+                      msg.sender === "user"
+                        ? "linear-gradient(90deg, #7b2ff2 0%, #f357a8 100%)"
+                        : "linear-gradient(90deg, #f357a8 0%, #ffb86c 100%)",
                     color: "#fff",
-                    borderRadius: 2,
-                    px: 2,
-                    py: 1,
-                    maxWidth: "75%",
-                    textAlign: msg.sender === "user" ? "right" : "left",
+                    boxShadow: msg.sender === "user"
+                      ? "0 2px 8px rgba(123,47,242,0.10)"
+                      : "0 2px 8px rgba(243,87,168,0.10)",
+                    display: "inline-block",
+                    maxWidth: "80%",
+                    marginBottom: 6,
                   }}
-                />
+                >
+                  {msg.text}
+                </span>
               </ListItem>
             ))}
           </List>

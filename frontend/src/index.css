@@ -1,0 +1,10 @@
+/* Add your global styles here */ 
+body {
+  margin: 0;
+  font-family: 'Roboto', sans-serif;
+  background: linear-gradient(135deg, #7b2ff2 0%, #f357a8 100%);
+  min-height: 100vh;
+}
+#root {
+  min-height: 100vh;
+} 
